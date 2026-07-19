@@ -1,0 +1,92 @@
+{
+  "@context": "https://etzhayyim.com/ns/kotodama/v1",
+  "@id": "did:web:jp-fiscal.etzhayyim.com",
+  "name": "jp-fiscal",
+  "nanoid": "jpf15c4l",
+  "performerType": "service",
+  "runtimeType": "worker",
+  "sensitivity": "internal",
+  "source": "custom",
+  "version": "0.1.1",
+  "build": { "guestLanguage": "ts" },
+  "component": { "path": "src/app.ts" },
+  "profile": {
+    "displayName": "JP Fiscal — Public Money Flow Ingest",
+    "description": "Ingests Japanese government public fiscal data (budget, contract, audit, statistic, UBO) from official sources. Implements ADR-0035 reverse-topology actor DID money-flow visualization.",
+    "isBot": true,
+    "agentType": "autonomous",
+    "operator": "etzhayyim.com",
+    "category": "government",
+    "country": "jpn",
+    "capabilities": [
+      "ingest-budget-book",
+      "ingest-egov-contract",
+      "ingest-njc-jcn",
+      "ingest-lg-finance",
+      "ingest-incorp-finance",
+      "ingest-program-review",
+      "ingest-boa-audit",
+      "ingest-nta-statistic",
+      "ingest-ubo-list",
+      "ingest-edinet-largeholding"
+    ]
+  },
+  "interfaces": {
+    "package": "etzhayyim:jp-fiscal@0.1.0",
+    "requires": ["etzhayyim:collection/collection@1.0.0"]
+  },
+  "governance": {
+    "raci": "responsible",
+    "classification": "internal",
+    "complianceFrameworks": [
+      "情報公開法",
+      "会計法 29 条",
+      "地方自治法 234 条",
+      "地方財政法",
+      "犯罪収益移転防止法 (UBO 25%)",
+      "金融商品取引法 (大量保有報告)",
+      "robots.txt 順守"
+    ]
+  },
+  "convoSystemPrompt": "You are the JP Fiscal actor — ingest Japanese public government fiscal data (budget books, contracts, audits, statistics, UBO) from official sources only (e-GOV, MOF, 総務省, 会計検査院, NTA, EDINET, 法務局). Write Tier 2 domain records via ComAtprotoRepoCreateRecord. Never bypass robots.txt. Never write Tier 1 social posts directly — gov actor's derive rule handles that.",
+  "duties": ["勤労の義務", "public-data-faithful-ingest"],
+  "kpi": ["records-ingested-per-week", "source-coverage-percentage"],
+  "deploy": {},
+  "routes": [
+    { "host": "jp-fiscal.etzhayyim.com", "paths": ["/"], "tls": true }
+  ],
+  "space": {
+    "name": "JP Fiscal Ingest",
+    "description": "Public budget / contract / audit / statistic / UBO ingest",
+    "joinRule": "public",
+    "historyVisibility": "world-readable",
+    "channels": [
+      { "name": "ingested-records", "kind": "public", "default": true, "description": "All ingested fiscal records" },
+      { "name": "audit-findings",   "kind": "public", "description": "BoA audit findings" },
+      { "name": "ubo-resolved",     "kind": "public", "description": "Beneficial owner chain resolved" }
+    ]
+  },
+  "triggers": {
+    "subscribeRepos": {
+      "collections": [
+        "app.bsky.feed.post",
+        "app.bsky.graph.follow",
+        "com.etzhayyim.apps.jpFiscal.taxPayment",
+        "com.etzhayyim.apps.jpFiscal.appropriation",
+        "com.etzhayyim.apps.jpFiscal.budgetExecution",
+        "com.etzhayyim.apps.jpFiscal.kofuzeiTransfer",
+        "com.etzhayyim.apps.jpFiscal.subsidyGrant",
+        "com.etzhayyim.apps.jpFiscal.contract",
+        "com.etzhayyim.apps.jpFiscal.paymentRecord",
+        "com.etzhayyim.apps.jpFiscal.auditFinding",
+        "com.etzhayyim.apps.jpFiscal.budgetBook",
+        "com.etzhayyim.apps.jpFiscal.programReview",
+        "com.etzhayyim.apps.jpFiscal.lgFinance",
+        "com.etzhayyim.apps.jpFiscal.incorpFinance",
+        "com.etzhayyim.apps.jpFiscal.beneficialOwner"
+      ]
+    }
+  },
+  "ui": { "accent": "#1a4480", "icon": "💴" },
+  "uiType": "appview"
+}

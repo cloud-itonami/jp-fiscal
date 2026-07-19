@@ -1,0 +1,51 @@
+{
+  "name": "kotodama-jpf15c4l",
+  "main": "svelte/.svelte-kit/cloudflare/_worker.js",
+  "compatibility_date": "2025-03-17",
+  "compatibility_flags": [
+    "nodejs_compat",
+    "nodejs_als"
+  ],
+  "assets": {
+    "directory": "./svelte/.svelte-kit/cloudflare/client",
+    "binding": "ASSETS",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "none"
+  },
+  "vars": {
+    "APP_ACTOR_HANDLE": "jpfiscal",
+    "APP_CAPABILITIES": "[\"ingest-budget-book\",\"ingest-egov-contract\",\"ingest-njc-jcn\",\"ingest-lg-finance\",\"ingest-incorp-finance\",\"ingest-program-review\",\"ingest-boa-audit\",\"ingest-nta-statistic\",\"ingest-ubo-list\",\"ingest-edinet-largeholding\"]",
+    "APP_DEPLOY_AT": "2026-05-07T02:29:47Z",
+    "APP_DEPLOY_SHA": "b6bc95e02fc",
+    "APP_DESCRIPTION": "Ingests Japanese government public fiscal data (budget, contract, audit, statistic, UBO) from official sources. Implements ADR-0035 reverse-topology actor DID money-flow visualization.",
+    "APP_DISPLAY_NAME": "JP Fiscal — Public Money Flow Ingest",
+    "APP_EMBED_URL": "https://jpf15c4l.etzhayyim.com/?embed=1",
+    "APP_FRAMEWORK": "sveltekit-edge-bff",
+    "APP_NANOID": "jpf15c4l",
+    "APP_PERFORMER_TYPE": "service",
+    "APP_SOURCE": "custom",
+    "APP_TEMPLATE": "",
+    "APP_UI_TYPE": "appview",
+    "APP_VERSION": "0.1.1",
+    "INTERFACES_REQUIRES": "[\"etzhayyim:collection/collection@1.0.0\"]",
+    "AGENTGATEWAY_MCP_ROUTER_URL": "https://mcp.etzhayyim.com/xrpc/com.etzhayyim.mcp.message"
+  },
+  "rules": [
+    {
+      "type": "CompiledWasm",
+      "globs": [
+        "**/*.wasm"
+      ]
+    }
+  ],
+  "routes": [
+    {
+      "pattern": "jpf15c4l.etzhayyim.com/*",
+      "zone_name": "etzhayyim.com"
+    },
+    {
+      "pattern": "jp-fiscal.etzhayyim.com/*",
+      "zone_name": "etzhayyim.com"
+    }
+  ]
+}
