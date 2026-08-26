@@ -101,8 +101,12 @@ npm run typecheck # tsc --noEmit
 
 ## まだ確認していないこと（正直に）
 
-- **appview のローカル実行**（`appview/etzhayyim-wasm-jpfiscal-jpf15c4l/`）。
-  SvelteKit + Cloudflare Worker だが、ローカル起動手順は未検証。
+- **appview を `wrangler dev`/`wrangler deploy` で動かすこと**
+  （`appview/etzhayyim-wasm-jpfiscal-jpf15c4l/`）。frontend は 2026-08-26 に
+  SvelteKit から cljs（shadow-cljs + reagent + re-frame + jp-go-dds、
+  `cljs/`）へ移行し、`cljs/` 単体の build/test は確認済み（下記
+  `appview/etzhayyim-wasm-jpfiscal-jpf15c4l/wrangler.jsonc` のコメント参照）。
+  Worker 全体としての `wrangler dev`/`wrangler deploy` は未検証のまま。
 - **デプロイ。** `CLAUDE.md` は
   `cd 60-apps/etzhayyim-project-jp-fiscal/appview/... && etzhayyim deploy` と
   書いているが、**この手順は今は踏めない**:
