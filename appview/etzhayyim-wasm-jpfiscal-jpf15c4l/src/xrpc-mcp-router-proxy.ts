@@ -1,3 +1,22 @@
+// SVELTEKIT-BACKEND-PRESERVED: moved out of svelte/ during the cljs migration; not wired.
+//
+// Moved byte-for-byte (only this header was prepended) from
+// `appview/etzhayyim-wasm-jpfiscal-jpf15c4l/svelte/src/routes/xrpc/[...path]/+server.ts`,
+// the SvelteKit server-route file that was the actual deployed XRPC handler
+// (per the pre-migration `appview/etzhayyim-wasm-jpfiscal-jpf15c4l/wrangler.jsonc`'s
+// `main`, which pointed at the SvelteKit build output).
+//
+// It still imports from '@sveltejs/kit' and './$types' (SvelteKit's
+// codegen'd route types), so it will not run as-is now that the SvelteKit
+// toolchain (`appview/etzhayyim-wasm-jpfiscal-jpf15c4l/svelte/`) is gone.
+// Whether to revive it — e.g. rewritten as a plain Cloudflare Worker fetch
+// handler — is an open product decision, not something this frontend
+// migration decides.
+//
+// Note: this Worker also has a separate `src/app.ts`, the actual deployed
+// jp-fiscal ingest actor (10 source adapters). That file is unrelated to
+// this proxy and was not touched by this migration.
+
 import { json, type RequestEvent } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 

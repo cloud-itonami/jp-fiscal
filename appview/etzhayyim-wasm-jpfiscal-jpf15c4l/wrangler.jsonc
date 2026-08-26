@@ -1,13 +1,36 @@
 {
+  // NOTE: this app used to be built by SvelteKit's @sveltejs/adapter-cloudflare,
+  // which emitted both a server-rendering Worker script (`main`, the deployed
+  // XRPC handler at svelte/src/routes/xrpc/[...path]/+server.ts) and a static
+  // client bundle (`assets.directory`, the +page.svelte status page). The
+  // frontend was migrated to a plain ClojureScript (shadow-cljs + reagent +
+  // re-frame + jp-go-dds) static bundle with no server-rendering step — see
+  // cljs/ and the repo README. `main` is dropped (a Cloudflare Worker can be
+  // assets-only) and `assets.directory` now points at the cljs build output.
+  //
+  // `main` is NOT repointed at either Worker source still in this repo
+  // (`src/app.ts`, the real jp-fiscal ingest actor, or the moved
+  // `src/xrpc-mcp-router-proxy.ts`): neither calls `env.ASSETS.fetch`, so
+  // putting either in front of the assets would mean nothing serves the
+  // static files. Both remain orphaned source, same as before this
+  // migration (src/app.ts was already unreferenced by this wrangler.jsonc).
+  //
+  // This edit is unverified: `wrangler deploy`/`wrangler dev` were not run
+  // against it. Dropping `main` means the XRPC BFF endpoint
+  // (`src/xrpc-mcp-router-proxy.ts`, moved verbatim from the SvelteKit
+  // server route) is no longer in the deploy path — see that file's header
+  // and the repo README for what that means. Note that neither route
+  // (`jpf15c4l.etzhayyim.com` / `jp-fiscal.etzhayyim.com`) currently
+  // resolves in DNS anyway (README.md, "現在地" section, 2026-08-14) — this
+  // migration does not change that.
   "name": "kotodama-jpf15c4l",
-  "main": "svelte/.svelte-kit/cloudflare/_worker.js",
   "compatibility_date": "2025-03-17",
   "compatibility_flags": [
     "nodejs_compat",
     "nodejs_als"
   ],
   "assets": {
-    "directory": "./svelte/.svelte-kit/cloudflare/client",
+    "directory": "./cljs/public",
     "binding": "ASSETS",
     "html_handling": "auto-trailing-slash",
     "not_found_handling": "none"
@@ -20,7 +43,7 @@
     "APP_DESCRIPTION": "Ingests Japanese government public fiscal data (budget, contract, audit, statistic, UBO) from official sources. Implements ADR-0035 reverse-topology actor DID money-flow visualization.",
     "APP_DISPLAY_NAME": "JP Fiscal — Public Money Flow Ingest",
     "APP_EMBED_URL": "https://jpf15c4l.etzhayyim.com/?embed=1",
-    "APP_FRAMEWORK": "sveltekit-edge-bff",
+    "APP_FRAMEWORK": "cljs-reagent-re-frame-jp-go-dds",
     "APP_NANOID": "jpf15c4l",
     "APP_PERFORMER_TYPE": "service",
     "APP_SOURCE": "custom",

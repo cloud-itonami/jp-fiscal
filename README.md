@@ -19,30 +19,43 @@ PII も決済も扱わない。扱うのは各府省・会計検査院・国税�
 
 | | `kotoba/` | `appview/etzhayyim-wasm-jpfiscal-jpf15c4l/` |
 |---|---|---|
-| 何 | reference implementation（TS パッケージ） | Cloudflare Worker（SvelteKit edge BFF） |
+| 何 | reference implementation（TS パッケージ） | Cloudflare Worker（frontend: cljs + reagent + re-frame + jp-go-dds、backend: TS ingest actor） |
 | 収録範囲 | 資金フローの中核 4 コレクション | 10 source adapter |
 | コレクション | `jpFiscal.appropriation` / `.contract` / `.subsidyGrant` / `.auditFinding` | `jpFiscal.budgetBook` / `.contract` / `.beneficialOwner` ほか |
-| テスト | あり（4 件、`vitest`） | なし |
-| 手元で動くか | **動く**（下記 quickstart） | ローカル実行経路は未確認 |
+| テスト | あり（4 件、`vitest`） | frontend: あり（`cljs/test/`, shadow-cljs `:node-test`） / backend: なし |
+| 手元で動くか | **動く**（下記 quickstart） | frontend build/test は動く（下記）。`wrangler dev`/デプロイは未確認 |
 | デプロイ | しない（ライブラリ） | **現在ライブではない**（下記） |
 
 `kotoba/` の型定義が自ら書いているとおり、`kotoba/` は appview の
 13 コレクションのうち中核だけを取ったサブセットであり、appview を置き換えたもの
 ではない。
 
-## 現在地（2026-08-14 実測）
+## 現在地
 
 **動くと確認したもの**
 
-- `kotoba/` の test 4 件が通る / `tsc --noEmit` が通る（手順は
+- `kotoba/` の test 4 件が通る / `tsc --noEmit` が通る（2026-08-14 実測、手順は
   [`docs/operator-quickstart.md`](docs/operator-quickstart.md)）
+- **appview の frontend**（2026-08-26 実測、ADR-2608260900）:
+  `appview/etzhayyim-wasm-jpfiscal-jpf15c4l/cljs/` を
+  `shadow-cljs compile app`（0 warnings）/ `shadow-cljs compile test` +
+  `node out/tests.js`（5 tests, 14 assertions, 0 failures）で確認済み。
+  SvelteKit（`svelte/`）を置き換えた reagent + re-frame + jp-go-dds の
+  static ページ。**Worker としての `wrangler dev`/`wrangler deploy` は
+  未検証のまま**（下記 appview/.../wrangler.jsonc のヘッダコメント参照）。
 
 **動かない・まだ無いもの**
 
 - **appview はデプロイされていない。** `wrangler.jsonc` が主張する
   `jpf15c4l.etzhayyim.com` と `jp-fiscal.etzhayyim.com` は
   **どちらも DNS が解決しない**（最終デプロイ記録は `APP_DEPLOY_AT`
-  2026-05-07）。
+  2026-05-07。2026-08-26 の frontend 移行でも変わっていない）。
+- **appview の XRPC BFF は現在デプロイ経路に無い。** SvelteKit の
+  server-side route（旧 `svelte/src/routes/xrpc/[...path]/+server.ts`）が
+  実際にデプロイされていた XRPC ハンドラだったが、`wrangler.jsonc` から
+  `main` を削除したため、この Worker は現在 assets-only。ハンドラ本体は
+  `appview/etzhayyim-wasm-jpfiscal-jpf15c4l/src/xrpc-mcp-router-proxy.ts`
+  に無傷で移設済み（未配線、復活させるかは product decision）。
 - **10 adapter のうち実際に書き込むのは 4 つだけ。** 残りは戻り値に
   `note: "...impl pending"` を持つ明示的なスタブで、fetch はするが
   `wrote: 0` を返す。
