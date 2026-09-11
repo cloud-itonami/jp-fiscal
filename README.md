@@ -38,7 +38,7 @@ PII も決済も扱わない。扱うのは各府省・会計検査院・国税�
   [`docs/operator-quickstart.md`](docs/operator-quickstart.md)）
 - **appview の frontend**（2026-08-26 実測、ADR-2608260900）:
   `appview/etzhayyim-wasm-jpfiscal-jpf15c4l/cljs/` を
-  `shadow-cljs compile app`（0 warnings）/ `shadow-cljs compile test` +
+  `amu compile --target wasm32-browser app`（0 warnings）/ `amu compile --target wasm32-browser test` +
   `node out/tests.js`（5 tests, 14 assertions, 0 failures）で確認済み。
   SvelteKit（`svelte/`）を置き換えた reagent + re-frame + jp-go-dds の
   static ページ。**Worker としての `wrangler dev`/`wrangler deploy` は
