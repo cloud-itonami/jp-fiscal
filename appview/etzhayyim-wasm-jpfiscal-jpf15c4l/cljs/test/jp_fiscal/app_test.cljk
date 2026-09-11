@@ -25,7 +25,7 @@
             "APP_UI_TYPE" "APP_VERSION" "INTERFACES_REQUIRES" "AGENTGATEWAY_MCP_ROUTER_URL"]
            @(rf/subscribe [:app/vars])))
     (is (false? @(rf/subscribe [:app/xrpc?])))
-    (is (= "appview/etzhayyim-wasm-jpfiscal-jpf15c4l/cljs/src/jp_fiscal/app.cljs"
+    (is (= "appview/etzhayyim-wasm-jpfiscal-jpf15c4l/cljs/src/jp_fiscal/app.cljk"
            @(rf/subscribe [:app/relative-path])))))
 
 (deftest routes-sub-reflects-db

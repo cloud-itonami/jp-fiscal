@@ -92,7 +92,7 @@
               "APP_NANOID" "APP_PERFORMER_TYPE" "APP_SOURCE" "APP_TEMPLATE"
               "APP_UI_TYPE" "APP_VERSION" "INTERFACES_REQUIRES" "AGENTGATEWAY_MCP_ROUTER_URL"]
    :app/xrpc? false
-   :app/relative-path "appview/etzhayyim-wasm-jpfiscal-jpf15c4l/cljs/src/jp_fiscal/app.cljs"})
+   :app/relative-path "appview/etzhayyim-wasm-jpfiscal-jpf15c4l/cljs/src/jp_fiscal/app.cljk"})
 
 (rf/reg-event-db
  :initialize-db
