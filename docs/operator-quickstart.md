@@ -19,7 +19,7 @@ cd jp-fiscal/kotoba
 ```
 
 west 管理下の checkout を直接使う場合は、共有 checkout を編集せず
-worktree を切ること（superproject の CLAUDE.md「並行エージェント運用」）。
+worktree を切ること（superproject の AGENTS.md「並行エージェント運用」）。
 **この repo の remote 名は `origin` ではなく `cloud-itonami`**（west が
 org 名で remote を作る）ので、`git fetch origin` は
 `does not appear to be a git repository` で落ちる。
@@ -107,7 +107,7 @@ npm run typecheck # tsc --noEmit
   `cljs/`）へ移行し、`cljs/` 単体の build/test は確認済み（下記
   `appview/etzhayyim-wasm-jpfiscal-jpf15c4l/wrangler.jsonc` のコメント参照）。
   Worker 全体としての `wrangler dev`/`wrangler deploy` は未検証のまま。
-- **デプロイ。** `CLAUDE.md` は
+- **デプロイ。** `AGENTS.md` は
   `cd 60-apps/etzhayyim-project-jp-fiscal/appview/... && etzhayyim deploy` と
   書いているが、**この手順は今は踏めない**:
   - `60-apps/` は**この repo に存在しない**（抽出でこの repo のルートに
