@@ -14,7 +14,7 @@
   - `:app/relative-path` now names this file, not the deleted Svelte one.
     The old field also carried a stale `60-apps/etzhayyim-project-jp-fiscal/`
     prefix — drift from before this repo was extracted from `etzhayyim/root`
-    (see `migration.edn` and README.md/CLAUDE.md, which already document
+    (see `migration.edn` and README.md/AGENTS.md, which already document
     that `60-apps/` does not exist in this repo). That prefix is dropped
     here since this field must name a file that actually exists in this
     repo.
